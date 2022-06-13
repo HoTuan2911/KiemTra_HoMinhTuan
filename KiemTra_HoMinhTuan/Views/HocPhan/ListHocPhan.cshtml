@@ -7,32 +7,22 @@
 
 <h2>ListHocPhan</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TenHP)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SoTinChi)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TenHP)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SoTinChi)
-        </td>
-        <td>
-            @Html.ActionLink("Đăng Ký", "Đăng Ký", "HocPhan")
-        </td>
-    </tr>
-}
-
-</table>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="panel panel-default">
+                    <p>@item.MaHP</p>
+                    <p>@item.TenHP</p>
+                    <p>@item.SoTinChi</p>      
+                <div class="panel-footer clearfix">
+                    <div class="pull-right">
+                        <div class="DatMua">
+                            <a class="btn btn-success" href="@Url.Action("ThemHocPhan", "ThemHocPhan","HocPhan")">Đăng ký</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
