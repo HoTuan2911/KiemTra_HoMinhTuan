@@ -18,9 +18,9 @@ namespace KiemTra_HoMinhTuan.Controllers
 
 
         //Details
-        public ActionResult Details(string id)
+        public ActionResult Details()
         {
-            var D_Sinhvien = data.SinhViens.Where(m => m.MaSV == id).First();
+            var D_Sinhvien = data.SinhViens.Where(m => m.MaSV != null).First();
             return View(D_Sinhvien);
         }
 
@@ -59,16 +59,16 @@ namespace KiemTra_HoMinhTuan.Controllers
         }
 
         //Edit
-        public ActionResult Edit(string id)
+        public ActionResult Edit()
         {
-            var E_SinhVien = data.SinhViens.First(m => m.MaSV == id);
+            var E_SinhVien = data.SinhViens.First(m => m.MaSV != null);
             return View(E_SinhVien);
         }
 
         [HttpPost]
-        public ActionResult Edit(string id, FormCollection collection)
+        public ActionResult Edit( FormCollection collection)
         {
-            var E_SinhVien = data.SinhViens.First(m => m.MaSV == id);
+            var E_SinhVien = data.SinhViens.First(m => m.MaSV != null);
             var E_HoTen = collection["HoTen"];
             var E_GioiTinh = collection["GioiTinh"];
             var E_NgaySinh = Convert.ToDateTime(collection["NgaySinh"]);
@@ -90,20 +90,20 @@ namespace KiemTra_HoMinhTuan.Controllers
                 data.SubmitChanges();
                 return RedirectToAction("Index");
             }
-            return this.Edit(id);
+            return this.Edit();
         }
 
 
         //Delete
-        public ActionResult Delete(string id)
+        public ActionResult Delete()
         {
-            var D_SinhVien = data.SinhViens.First(m => m.MaSV == id);
+            var D_SinhVien = data.SinhViens.First(m => m.MaSV != null);
             return View(D_SinhVien);
         }
         [HttpPost]
-        public ActionResult Delete(string id, FormCollection collection)
+        public ActionResult Delete( FormCollection collection)
         {
-            var D_SinhVien = data.SinhViens.Where(m => m.MaSV == id).First();
+            var D_SinhVien = data.SinhViens.Where(m => m.MaSV != null).First();
             data.SinhViens.DeleteOnSubmit(D_SinhVien);
             data.SubmitChanges();
             return RedirectToAction("Index");
