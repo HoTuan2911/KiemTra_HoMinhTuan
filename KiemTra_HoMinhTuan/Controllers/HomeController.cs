@@ -16,12 +16,18 @@ namespace KiemTra_HoMinhTuan.Controllers
             return View(all_sinhvien);
         }
 
+
+        //Details
         public ActionResult Details()
         {
-            return View();
+            var D_Sinhvien = data.SinhViens.Where(m => m.MaSV != null).First();
+            return View(D_Sinhvien);
         }
+
+        //Create
         public ActionResult Create()
         {
+
             return View();
         }
         [HttpPost]
@@ -51,6 +57,8 @@ namespace KiemTra_HoMinhTuan.Controllers
             }
             return this.Create();
         }
+
+        
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
