@@ -18,9 +18,9 @@ namespace KiemTra_HoMinhTuan.Controllers
 
 
         //Details
-        public ActionResult Details()
+        public ActionResult Details(string id)
         {
-            var D_Sinhvien = data.SinhViens.Where(m => m.MaSV != null).First();
+            var D_Sinhvien = data.SinhViens.Where(m => m.MaSV == id).First();
             return View(D_Sinhvien);
         }
 
@@ -58,7 +58,58 @@ namespace KiemTra_HoMinhTuan.Controllers
             return this.Create();
         }
 
-        
+        //Edit
+        public ActionResult Edit(string id)
+        {
+            var E_SinhVien = data.SinhViens.First(m => m.MaSV == id);
+            return View(E_SinhVien);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(string id, FormCollection collection)
+        {
+            var E_SinhVien = data.SinhViens.First(m => m.MaSV == id);
+            var E_HoTen = collection["HoTen"];
+            var E_GioiTinh = collection["GioiTinh"];
+            var E_NgaySinh = Convert.ToDateTime(collection["NgaySinh"]);
+            var E_Hinh = collection["Hinh"];
+            var E_MaNganh = collection["MaNganh"];
+
+            if (string.IsNullOrEmpty(E_HoTen))
+            {
+                ViewData["Error"] = "Don't empty!";
+            }
+            else
+            {
+                E_SinhVien.HoTen = E_HoTen;
+                E_SinhVien.GioiTinh = E_GioiTinh;
+                E_SinhVien.NgaySinh = E_NgaySinh;
+                E_SinhVien.Hinh = E_Hinh;
+                E_SinhVien.MaNganh = E_MaNganh;
+                UpdateModel(E_SinhVien);
+                data.SubmitChanges();
+                return RedirectToAction("Index");
+            }
+            return this.Edit(id);
+        }
+
+
+        //Delete
+        public ActionResult Delete(string id)
+        {
+            var D_SinhVien = data.SinhViens.First(m => m.MaSV == id);
+            return View(D_SinhVien);
+        }
+        [HttpPost]
+        public ActionResult Delete(string id, FormCollection collection)
+        {
+            var D_SinhVien = data.SinhViens.Where(m => m.MaSV == id).First();
+            data.SinhViens.DeleteOnSubmit(D_SinhVien);
+            data.SubmitChanges();
+            return RedirectToAction("Index");
+        }
+
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
